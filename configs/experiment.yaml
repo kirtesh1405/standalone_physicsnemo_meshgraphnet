@@ -1,0 +1,56 @@
+# All relative paths resolve from this portable folder, not from the old project.
+artifact_root: artifacts
+artifact_namespace: simjeb_physicsnemo_mgn_v1
+split_manifest: data/splits/frozen_simjeb_split.yaml
+seed: 42
+
+dataset:
+  # Put the raw dataset under this portable folder; see docs/DATA_CONTRACT.md.
+  raw_root: data/raw
+  metadata_file: data/raw/all_bracket_metadata.csv
+  obj_directory: data/raw/full_dataset/surfmesh_obj
+  field_directory: data/raw/full_dataset/simresults_csv
+  obj_template: "{case_id}.obj"
+  field_template: "{case_id}field.csv"
+  # Canonical name: source CSV header. Change only right-hand values for a new CSV schema.
+  field_columns:
+    surf: surf
+    x: x
+    y: y
+    z: z
+    ver_xdisp: ver_xdisp
+    ver_ydisp: ver_ydisp
+    ver_zdisp: ver_zdisp
+    ver_stress: ver_stress
+    hor_xdisp: hor_xdisp
+    hor_ydisp: hor_ydisp
+    hor_zdisp: hor_zdisp
+    hor_stress: hor_stress
+    dia_xdisp: dia_xdisp
+    dia_ydisp: dia_ydisp
+    dia_zdisp: dia_zdisp
+    dia_stress: dia_stress
+    tor_xdisp: tor_xdisp
+    tor_ydisp: tor_ydisp
+    tor_zdisp: tor_zdisp
+    tor_stress: tor_stress
+
+surface:
+  target_face_count: 2048
+  coordinate_tolerance: 0.001
+
+model:
+  hidden_width: 48
+  message_passing_layers: 6
+  mlp_layers: 2
+
+training:
+  epochs: 50
+  learning_rate: 0.001
+  weight_decay: 0.00001
+  gradient_clip_norm: 1.0
+  critical_weight: 2.0
+  critical_quantile: 0.90
+  device: cuda
+  require_cuda: true
+  amp: false
